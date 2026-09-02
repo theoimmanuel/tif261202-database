@@ -1,10 +1,10 @@
 # Final Project: SQL Data Integration
 
-**Course:** TIF1202 - Database Technology
-**Instructor:** Dr. Guntur Dharma Putra
-**Due Date:** Thursday, 1 October 2026 at 12.59 (Late submissions are not accepted.) 
+**Course:** TIF1202 - Database Technology  
+**Instructor:** Dr. Guntur Dharma Putra  
+**Due Date:** Thursday, 1 October 2026 at **12.59** with a presentation during our last class  
 
-## 1. Project Overview & Scenario
+## 1. Project Overview
 
 In modern enterprises, data is rarely handed to analysts in a clean, unified relational format. Transactional data commonly originates from disparate microservices and external interfaces:
 - Customer master lists are exported as flat **CSV** files from legacy CRM platforms.

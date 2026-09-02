@@ -1,10 +1,10 @@
-# Final Project: Relational Database Architecture, Pure SQL Data Integration & Analytical DQL
+# Final Project: SQL Data Integration
 
-**Course:** Database Systems / Relational Databases  
+**Course:** TIF1202 - Database Technology
+**Instructor:** Dr. Guntur Dharma Putra
+**Due Date:** Thursday, 1 October 2026 at 12.59 (Late submissions are not accepted.)
 **Platform:** PostgreSQL (Managed via GUI: pgAdmin 4 / DBeaver / TablePlus)  
 **Deliverables:** Written Project Report (PDF) + Complete SQL Script (`project_solution.sql`)  
-**Rules:** Strictly pure SQL fundamentals (**DDL, DML, DQL**). Do **NOT** use Views, Stored Procedures, Functions, or Triggers.
-
 ---
 
 ## 1. Project Overview & Scenario

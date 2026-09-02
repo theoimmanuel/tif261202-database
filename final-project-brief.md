@@ -4,37 +4,19 @@
 **Instructor:** Dr. Guntur Dharma Putra  
 **Due Date:** Thursday, 1 October 2026 at **12.59** with a presentation during our last class  
 
-## 1. Project Overview
+## Overview  
+In modern enterprises, data is rarely handed to analysts in a clean, unified relational format. These raw data streams suffer from common data hygiene problems: redundant spaces, missing values, inconsistent casing, duplicate primary records, and references to discontinued products. You and your team will act as Data Engineers that process raw data in the forms of **CSV** and **JSON** files into a presentable, analytical, and structured relational database.  
 
-In modern enterprises, data is rarely handed to analysts in a clean, unified relational format. Transactional data commonly originates from disparate microservices and external interfaces:
-- Customer master lists are exported as flat **CSV** files from legacy CRM platforms.
-- Sales transactions are dumped as nested **JSON** logs from web/mobile checkout gateways.
+Feel free to use any code editor software to write the SQL script, although you are encouraged to use a **PostgreSQL GUI** of your choice (e.g. pgAdmin 4, DBeaver) to ease your data loading scheme.  
 
-These raw data streams suffer from common data hygiene problems: redundant spaces, missing values, inconsistent casing, duplicate primary records, and references to discontinued products.
-
-In this capstone project, your team will act as Data Architects and Analytics Engineers to:
-1. Understand the reference database structure provided in `schema.sql` and `seed_master.sql`, and produce a formal **Logical Schema** and **Entity-Relationship Diagram (ERD)**.
-2. Ingest raw customer (**CSV**) and transaction (**JSON**) files into **Staging Tables** using a PostgreSQL GUI.
-3. Perform end-to-end data cleansing, deduplication, and relational transformation into the core tables using **pure SQL DML** (`INSERT INTO ... SELECT`, CTEs, window functions, and set operations).
-4. Build new **Summary/Aggregate Tables** using **DDL** and author **15 Mandatory Analytical Queries (Q1–Q15)** using **DQL** to extract business insights and verify relational integrity.
-
----
-
-## 2. Provided Starter Kit & Data Files
-
-Each team is provided with four files:
-
-| File Name | Format | Role & Description |
+## Provided Data Files  
+| File Name | Format | Description |
 | :--- | :---: | :--- |
-| `schema.sql` | SQL DDL | Reference schema definition containing the staging tables, core OLTP tables, and relational constraints (PK, FK, UNIQUE, CHECK). |
-| `seed_master.sql` | SQL DML | Master reference data populating `stores` (or branches), `categories`, and `products`. |
+| `schema.sql` | SQL DDL and DML| Reference schema definition containing the staging tables, core tables, and relational constraints (PK, FK, UNIQUE, CHECK), along with master reference data populating `stores` (or branches), `categories`, and `products`. |
 | `customers_raw.csv` | CSV | Raw customer registration records containing whitespaces, missing cities, and duplicate records. |
 | `transactions_raw.json` | JSON | Raw checkout logs containing order headers and nested transaction line items, including potential duplicate transaction IDs and invalid product entries. |
 
----
-
-## 3. Project Tasks & Step-by-Step Instructions
-
+## Tasks  
 ### Task 1: Schema Understanding, Logical Schema & ERD Design
 Before writing transformation queries, analyze `schema.sql` and `seed_master.sql`:
 1. **Logical Schema:** Document all core tables, column data types, nullability, primary keys, foreign keys (with on update/delete actions), and unique/check constraints in standard relational notation.

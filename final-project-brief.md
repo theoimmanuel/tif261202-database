@@ -2,10 +2,7 @@
 
 **Course:** TIF1202 - Database Technology
 **Instructor:** Dr. Guntur Dharma Putra
-**Due Date:** Thursday, 1 October 2026 at 12.59 (Late submissions are not accepted.)
-**Platform:** PostgreSQL (Managed via GUI: pgAdmin 4 / DBeaver / TablePlus)  
-**Deliverables:** Written Project Report (PDF) + Complete SQL Script (`project_solution.sql`)  
----
+**Due Date:** Thursday, 1 October 2026 at 12.59 (Late submissions are not accepted.) 
 
 ## 1. Project Overview & Scenario
 

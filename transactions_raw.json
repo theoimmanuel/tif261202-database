@@ -1,0 +1,807 @@
+[
+  {
+    "order_code": "ORD-2024-0001",
+    "order_date": "2024-05-24",
+    "customer_code": "CUST-1022",
+    "customer_name": "Wahyu Setiawan",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 3,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 1,
+        "unit_price": 750000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0002",
+    "order_date": "2024-05-19",
+    "customer_code": "CUST-1023",
+    "customer_name": "Yulia Rahman",
+    "store_name": "Medan Central",
+    "payment_method": "E-Wallet",
+    "items": [
+      {
+        "product_name": "Ergonomic Mechanical Keyboard",
+        "quantity": 1,
+        "unit_price": 1250000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0003",
+    "order_date": "2024-05-18",
+    "customer_code": "CUST-1007",
+    "customer_name": "Gita Gutawa",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 1,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 1,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Water-Resistant Commuter Jacket",
+        "quantity": 3,
+        "unit_price": 650000.0
+      },
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 2,
+        "unit_price": 750000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0004",
+    "order_date": "2024-06-07",
+    "customer_code": "CUST-1011",
+    "customer_name": "Kartika Sari",
+    "store_name": "Surabaya Megastore",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 2,
+        "unit_price": 4200000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0005",
+    "order_date": "2024-07-20",
+    "customer_code": "CUST-1004",
+    "customer_name": "Dewi Lestari",
+    "store_name": "Surabaya Megastore",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 3,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Discontinued VR Headset Pro",
+        "quantity": 1,
+        "unit_price": 5500000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0006",
+    "order_date": "2024-05-18",
+    "customer_code": "CUST-1004",
+    "customer_name": "Dewi Lestari",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Espresso Coffee Grinder Pro",
+        "quantity": 3,
+        "unit_price": 1150000.0
+      },
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 1,
+        "unit_price": 4200000.0
+      },
+      {
+        "product_name": "Ergonomic Mechanical Keyboard",
+        "quantity": 2,
+        "unit_price": 1250000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0007",
+    "order_date": "2024-05-13",
+    "customer_code": "CUST-1003",
+    "customer_name": "Citra Kirana",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "High-Density Non-Slip Yoga Mat",
+        "quantity": 1,
+        "unit_price": 250000.0
+      },
+      {
+        "product_name": "Smart Electric Kettle 1.5L",
+        "quantity": 3,
+        "unit_price": 380000.0
+      },
+      {
+        "product_name": "Archival Rollerball Pen Set (Pack of 5)",
+        "quantity": 2,
+        "unit_price": 120000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 3,
+        "unit_price": 85000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0008",
+    "order_date": "2024-06-18",
+    "customer_code": "CUST-1023",
+    "customer_name": "Yulia Rahman",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 2,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Adjustable Hex Dumbbell Pair (10kg)",
+        "quantity": 3,
+        "unit_price": 520000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0009",
+    "order_date": "2024-06-22",
+    "customer_code": "CUST-1024",
+    "customer_name": "Zack Lee",
+    "store_name": "Medan Central",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 1,
+        "unit_price": 950000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0010",
+    "order_date": "2024-07-03",
+    "customer_code": "CUST-1011",
+    "customer_name": "Kartika Sari",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Espresso Coffee Grinder Pro",
+        "quantity": 3,
+        "unit_price": 1150000.0
+      },
+      {
+        "product_name": "Archival Rollerball Pen Set (Pack of 5)",
+        "quantity": 2,
+        "unit_price": 120000.0
+      },
+      {
+        "product_name": "Minimalist Aluminum Laptop Stand",
+        "quantity": 1,
+        "unit_price": 310000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0011",
+    "order_date": "2024-06-24",
+    "customer_code": "CUST-1009",
+    "customer_name": "Indah Permatasari",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "Cash",
+    "items": [
+      {
+        "product_name": "Speed Jump Rope Steel Cable",
+        "quantity": 1,
+        "unit_price": 95000.0
+      },
+      {
+        "product_name": "Adjustable Hex Dumbbell Pair (10kg)",
+        "quantity": 1,
+        "unit_price": 520000.0
+      },
+      {
+        "product_name": "Smart Electric Kettle 1.5L",
+        "quantity": 3,
+        "unit_price": 380000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0012",
+    "order_date": "2024-05-28",
+    "customer_code": "CUST-1016",
+    "customer_name": "Putri Marino",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Smart Electric Kettle 1.5L",
+        "quantity": 3,
+        "unit_price": 380000.0
+      },
+      {
+        "product_name": "Speed Jump Rope Steel Cable",
+        "quantity": 1,
+        "unit_price": 95000.0
+      },
+      {
+        "product_name": "Custom Unregistered Warranty",
+        "quantity": 1,
+        "unit_price": 150000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0013",
+    "order_date": "2024-08-17",
+    "customer_code": "CUST-1013",
+    "customer_name": "Maya Anggraini",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Active Noise-Cancelling Headphones",
+        "quantity": 3,
+        "unit_price": 1850000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0014",
+    "order_date": "2024-07-04",
+    "customer_code": "CUST-1018",
+    "customer_name": "Siti Nurhaliza",
+    "store_name": "Surabaya Megastore",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Smart Electric Kettle 1.5L",
+        "quantity": 3,
+        "unit_price": 380000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 2,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Ergonomic Mechanical Keyboard",
+        "quantity": 3,
+        "unit_price": 1250000.0
+      },
+      {
+        "product_name": "High-Density Non-Slip Yoga Mat",
+        "quantity": 1,
+        "unit_price": 250000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0015",
+    "order_date": "2024-07-27",
+    "customer_code": "CUST-1017",
+    "customer_name": "Rian Ardianto",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Cash",
+    "items": [
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 1,
+        "unit_price": 750000.0
+      },
+      {
+        "product_name": "High-Density Non-Slip Yoga Mat",
+        "quantity": 3,
+        "unit_price": 250000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0016",
+    "order_date": "2024-07-16",
+    "customer_code": "CUST-1017",
+    "customer_name": "Rian Ardianto",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "High-Density Non-Slip Yoga Mat",
+        "quantity": 2,
+        "unit_price": 250000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0017",
+    "order_date": "2024-06-19",
+    "customer_code": "CUST-1008",
+    "customer_name": "Hendra Wijaya",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Archival Rollerball Pen Set (Pack of 5)",
+        "quantity": 1,
+        "unit_price": 120000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0018",
+    "order_date": "2024-06-22",
+    "customer_code": "CUST-1018",
+    "customer_name": "Siti Nurhaliza",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "E-Wallet",
+    "items": [
+      {
+        "product_name": "Quick-Dry Athletic T-Shirt",
+        "quantity": 1,
+        "unit_price": 180000.0
+      },
+      {
+        "product_name": "Speed Jump Rope Steel Cable",
+        "quantity": 3,
+        "unit_price": 95000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0019",
+    "order_date": "2024-07-13",
+    "customer_code": "CUST-1024",
+    "customer_name": "Zack Lee",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Minimalist Aluminum Laptop Stand",
+        "quantity": 1,
+        "unit_price": 310000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 1,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 2,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "Active Noise-Cancelling Headphones",
+        "quantity": 1,
+        "unit_price": 1850000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0020",
+    "order_date": "2024-06-19",
+    "customer_code": "CUST-1019",
+    "customer_name": "Taufik Hidayat",
+    "store_name": "Medan Central",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 3,
+        "unit_price": 4200000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0021",
+    "order_date": "2024-06-03",
+    "customer_code": "CUST-1022",
+    "customer_name": "Wahyu Setiawan",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 3,
+        "unit_price": 4200000.0
+      },
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 2,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 1,
+        "unit_price": 750000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0022",
+    "order_date": "2024-08-08",
+    "customer_code": "CUST-1018",
+    "customer_name": "Siti Nurhaliza",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "E-Wallet",
+    "items": [
+      {
+        "product_name": "Espresso Coffee Grinder Pro",
+        "quantity": 2,
+        "unit_price": 1150000.0
+      },
+      {
+        "product_name": "Active Noise-Cancelling Headphones",
+        "quantity": 2,
+        "unit_price": 1850000.0
+      },
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 2,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "Urban Casual Sneakers",
+        "quantity": 2,
+        "unit_price": 890000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0023",
+    "order_date": "2024-05-02",
+    "customer_code": "CUST-1015",
+    "customer_name": "Oscar Darmawan",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "E-Wallet",
+    "items": [
+      {
+        "product_name": "Active Noise-Cancelling Headphones",
+        "quantity": 1,
+        "unit_price": 1850000.0
+      },
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 3,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "Minimalist Aluminum Laptop Stand",
+        "quantity": 2,
+        "unit_price": 310000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0024",
+    "order_date": "2024-06-09",
+    "customer_code": "CUST-1005",
+    "customer_name": "Eko Prasetyo",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "E-Wallet",
+    "items": [
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 3,
+        "unit_price": 4200000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 1,
+        "unit_price": 85000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0025",
+    "order_date": "2024-05-03",
+    "customer_code": "CUST-1002",
+    "customer_name": "Budi Santoso",
+    "store_name": "Medan Central",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Speed Jump Rope Steel Cable",
+        "quantity": 2,
+        "unit_price": 95000.0
+      },
+      {
+        "product_name": "Archival Rollerball Pen Set (Pack of 5)",
+        "quantity": 1,
+        "unit_price": 120000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0026",
+    "order_date": "2024-06-13",
+    "customer_code": "CUST-1013",
+    "customer_name": "Maya Anggraini",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Quick-Dry Athletic T-Shirt",
+        "quantity": 3,
+        "unit_price": 180000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 3,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 3,
+        "unit_price": 750000.0
+      },
+      {
+        "product_name": "Espresso Coffee Grinder Pro",
+        "quantity": 3,
+        "unit_price": 1150000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0027",
+    "order_date": "2024-06-07",
+    "customer_code": "CUST-1024",
+    "customer_name": "Zack Lee",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 3,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "Minimalist Aluminum Laptop Stand",
+        "quantity": 2,
+        "unit_price": 310000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0028",
+    "order_date": "2024-08-17",
+    "customer_code": "CUST-1002",
+    "customer_name": "Budi Santoso",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Cash",
+    "items": [
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 1,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 1,
+        "unit_price": 4200000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0029",
+    "order_date": "2024-06-13",
+    "customer_code": "CUST-1020",
+    "customer_name": "Vina Panduwinata",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 2,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "27-inch 4K IPS Monitor",
+        "quantity": 3,
+        "unit_price": 4200000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0030",
+    "order_date": "2024-07-09",
+    "customer_code": "CUST-1019",
+    "customer_name": "Taufik Hidayat",
+    "store_name": "Medan Central",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 1,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "Quick-Dry Athletic T-Shirt",
+        "quantity": 3,
+        "unit_price": 180000.0
+      },
+      {
+        "product_name": "Espresso Coffee Grinder Pro",
+        "quantity": 3,
+        "unit_price": 1150000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0031",
+    "order_date": "2024-07-25",
+    "customer_code": "CUST-1010",
+    "customer_name": "Joko Widodo",
+    "store_name": "Yogyakarta Creative Outlet",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 3,
+        "unit_price": 85000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0032",
+    "order_date": "2024-05-18",
+    "customer_code": "CUST-1019",
+    "customer_name": "Taufik Hidayat",
+    "store_name": "Jakarta Flagship",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 1,
+        "unit_price": 750000.0
+      },
+      {
+        "product_name": "High-Density Non-Slip Yoga Mat",
+        "quantity": 1,
+        "unit_price": 250000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 2,
+        "unit_price": 85000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0033",
+    "order_date": "2024-08-27",
+    "customer_code": "CUST-1010",
+    "customer_name": "Joko Widodo",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "Cash",
+    "items": [
+      {
+        "product_name": "Minimalist Aluminum Laptop Stand",
+        "quantity": 3,
+        "unit_price": 310000.0
+      },
+      {
+        "product_name": "Ergonomic Mechanical Keyboard",
+        "quantity": 2,
+        "unit_price": 1250000.0
+      },
+      {
+        "product_name": "Urban Casual Sneakers",
+        "quantity": 3,
+        "unit_price": 890000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0034",
+    "order_date": "2024-07-04",
+    "customer_code": "CUST-1004",
+    "customer_name": "Dewi Lestari",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "Credit Card",
+    "items": [
+      {
+        "product_name": "Quick-Dry Athletic T-Shirt",
+        "quantity": 3,
+        "unit_price": 180000.0
+      },
+      {
+        "product_name": "Water-Resistant Commuter Jacket",
+        "quantity": 1,
+        "unit_price": 650000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0035",
+    "order_date": "2024-06-22",
+    "customer_code": "CUST-1024",
+    "customer_name": "Zack Lee",
+    "store_name": "Surabaya Megastore",
+    "payment_method": "Bank Transfer",
+    "items": [
+      {
+        "product_name": "Quick-Dry Athletic T-Shirt",
+        "quantity": 2,
+        "unit_price": 180000.0
+      },
+      {
+        "product_name": "Wireless Precision Mouse",
+        "quantity": 2,
+        "unit_price": 450000.0
+      },
+      {
+        "product_name": "Archival Rollerball Pen Set (Pack of 5)",
+        "quantity": 1,
+        "unit_price": 120000.0
+      },
+      {
+        "product_name": "Urban Casual Sneakers",
+        "quantity": 1,
+        "unit_price": 890000.0
+      }
+    ]
+  },
+  {
+    "order_code": "ORD-2024-0003",
+    "order_date": "2024-08-29",
+    "customer_code": "CUST-1007",
+    "customer_name": "Gita Gutawa",
+    "store_name": "Bandung Digital Hub",
+    "payment_method": "QRIS",
+    "items": [
+      {
+        "product_name": "Air Fryer Digital 4L",
+        "quantity": 1,
+        "unit_price": 950000.0
+      },
+      {
+        "product_name": "Dot Grid Hardcover Journal A5",
+        "quantity": 1,
+        "unit_price": 85000.0
+      },
+      {
+        "product_name": "Water-Resistant Commuter Jacket",
+        "quantity": 3,
+        "unit_price": 650000.0
+      },
+      {
+        "product_name": "USB-C Multiport Docking Station",
+        "quantity": 2,
+        "unit_price": 750000.0
+      }
+    ]
+  }
+]

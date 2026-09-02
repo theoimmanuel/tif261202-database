@@ -1,0 +1,26 @@
+raw_customer_id,raw_name,raw_email,raw_phone,raw_city,raw_registered_date
+CUST-1001,  Aditya Pratama  ,aditya.pratama@email.com,081234567890,Jakarta,2024-01-15
+CUST-1002,Budi Santoso,budi.santoso@email.com,+6281398765432,Bandung,2024-01-18
+CUST-1003,Citra Kirana,CITRA.KIRANA@EMAIL.COM,08215556677,,2024-01-20
+CUST-1004,  Dewi Lestari,dewi.lestari@email.com,085611223344,Surabaya,2024-02-01
+CUST-1005,Eko Prasetyo  ,eko.p@email.com,+62-817-9988-77,Yogyakarta,2024-02-05
+CUST-1006,Fajar Hidayat,fajar.h@email.com,081900112233,  medan  ,2024-02-11
+CUST-1007,Gita Gutawa,gita.gutawa@email.com,081233445566,Jakarta,2024-02-14
+CUST-1008,Hendra Wijaya,hendra.w@email.com,081377889900,,2024-02-19
+CUST-1009,Indah Permatasari,indah.p@email.com,082233445566,Bandung,2024-02-25
+CUST-1010,Joko Widodo,joko.widodo@email.com,085712345678,Surabaya,2024-03-02
+CUST-1001,Aditya Pratama,aditya.pratama@email.com,081234567890,Jakarta,2024-01-15
+CUST-1011,Kartika Sari,kartika.sari@email.com,081822334455,Yogyakarta,2024-03-10
+CUST-1012,Lukman Hakim,lukman.hakim@email.com,+628123443322,Medan,2024-03-15
+CUST-1013,Maya Anggraini,maya.a@email.com,081344556677,  ,2024-03-22
+CUST-1014,Nadia Putri,nadia.putri@email.com,082199887766,Jakarta,2024-03-28
+CUST-1015,Oscar Darmawan,oscar.d@email.com,085811223344,Bandung,2024-04-02
+CUST-1016,Putri Marino,putri.marino@email.com,081922334455,Surabaya,2024-04-09
+CUST-1017,Rian Ardianto,rian.a@email.com,081299881122,Yogyakarta,2024-04-14
+CUST-1018,Siti Nurhaliza,siti.nur@email.com,081388776655,Medan,2024-04-18
+CUST-1019,Taufik Hidayat,taufik.h@email.com,082211223344,,2024-04-25
+CUST-1020,Vina Panduwinata,vina.p@email.com,085677889900,Jakarta,2024-05-01
+CUST-1021,  Budi Santoso  ,budi.santoso2@email.com,081398765432,Bandung,2024-05-04
+CUST-1022,Wahyu Setiawan,wahyu.s@email.com,081899001122,Surabaya,2024-05-10
+CUST-1023,Yulia Rahman,yulia.r@email.com,081200112233,Yogyakarta,2024-05-15
+CUST-1024,Zack Lee,zack.lee@email.com,081311223344,Medan,2024-05-20

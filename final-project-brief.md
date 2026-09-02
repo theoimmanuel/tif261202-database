@@ -1,4 +1,115 @@
-generated, and their percentage share of overall company revenue, ordered descending by revenue.
+# Final Project: Relational Database Architecture, Pure SQL Data Integration & Analytical DQL
+
+**Course:** Database Systems / Relational Databases  
+**Platform:** PostgreSQL (Managed via GUI: pgAdmin 4 / DBeaver / TablePlus)  
+**Deliverables:** Written Project Report (PDF) + Complete SQL Script (`project_solution.sql`)  
+**Rules:** Strictly pure SQL fundamentals (**DDL, DML, DQL**). Do **NOT** use Views, Stored Procedures, Functions, or Triggers.
+
+---
+
+## 1. Project Overview & Scenario
+
+In modern enterprises, data is rarely handed to analysts in a clean, unified relational format. Transactional data commonly originates from disparate microservices and external interfaces:
+- Customer master lists are exported as flat **CSV** files from legacy CRM platforms.
+- Sales transactions are dumped as nested **JSON** logs from web/mobile checkout gateways.
+
+These raw data streams suffer from common data hygiene problems: redundant spaces, missing values, inconsistent casing, duplicate primary records, and references to discontinued products.
+
+In this capstone project, your team will act as Data Architects and Analytics Engineers to:
+1. Understand the reference database structure provided in `schema.sql` and `seed_master.sql`, and produce a formal **Logical Schema** and **Entity-Relationship Diagram (ERD)**.
+2. Ingest raw customer (**CSV**) and transaction (**JSON**) files into **Staging Tables** using a PostgreSQL GUI.
+3. Perform end-to-end data cleansing, deduplication, and relational transformation into the core tables using **pure SQL DML** (`INSERT INTO ... SELECT`, CTEs, window functions, and set operations).
+4. Build new **Summary/Aggregate Tables** using **DDL** and author **15 Mandatory Analytical Queries (Q1–Q15)** using **DQL** to extract business insights and verify relational integrity.
+
+---
+
+## 2. Provided Starter Kit & Data Files
+
+Each team is provided with four files:
+
+| File Name | Format | Role & Description |
+| :--- | :---: | :--- |
+| `schema.sql` | SQL DDL | Reference schema definition containing the staging tables, core OLTP tables, and relational constraints (PK, FK, UNIQUE, CHECK). |
+| `seed_master.sql` | SQL DML | Master reference data populating `stores` (or branches), `categories`, and `products`. |
+| `customers_raw.csv` | CSV | Raw customer registration records containing whitespaces, missing cities, and duplicate records. |
+| `transactions_raw.json` | JSON | Raw checkout logs containing order headers and nested transaction line items, including potential duplicate transaction IDs and invalid product entries. |
+
+---
+
+## 3. Project Tasks & Step-by-Step Instructions
+
+### Task 1: Schema Understanding, Logical Schema & ERD Design
+Before writing transformation queries, analyze `schema.sql` and `seed_master.sql`:
+1. **Logical Schema:** Document all core tables, column data types, nullability, primary keys, foreign keys (with on update/delete actions), and unique/check constraints in standard relational notation.
+2. **ERD (Entity-Relationship Diagram):** Draw a complete ERD (using Crow’s Foot notation) illustrating:
+   - Entities: `stores`, `categories`, `products`, `customers`, `orders`, and `order_items`.
+   - Cardinalities: 1-to-1, 1-to-many, or many-to-many relationships.
+   - All Primary Keys (`PK`) and Foreign Keys (`FK`).
+
+### Task 2: GUI Data Loading into Staging Tables
+Using your PostgreSQL GUI interface (pgAdmin 4, DBeaver, or TablePlus):
+1. Execute `schema.sql` and `seed_master.sql` to initialize the database and master tables.
+2. **Load CSV:** Ingest `customers_raw.csv` into `staging_customers_csv` using the GUI's native Import/Export tool or `COPY`.
+3. **Load JSON:** Ingest `transactions_raw.json` into `staging_transactions_json` (e.g., using GUI file import or direct JSONB payload insert).
+
+### Task 3: Pure SQL Data Cleansing & Transformation (DML)
+Populate the core relational tables from staging using **only pure SQL DML** (`INSERT INTO ... SELECT`, Common Table Expressions, conditional expressions, and window functions). **No Views, Stored Procedures, Functions, or Triggers are permitted.**
+
+#### A. Customer Cleaning Rules (`staging_customers_csv` → `customers`):
+- **Whitespace & Case Normalization:** Strip leading and trailing spaces from customer names and lowercase all email addresses.
+- **Handling Incomplete Data:** If the city is blank, null, or empty whitespace, substitute with `'Unknown'`.
+- **Deduplication:** Ensure each customer is loaded only once based on their natural/business key. Retain the earliest record if duplicates occur.
+- **Type Casting:** Properly cast strings to target types (e.g., `DATE`, `INTEGER`).
+
+#### B. Order & Order Items Integration Rules (`staging_transactions_json` → `orders`, `order_items`):
+- **JSON Unnesting:** Unnest the nested array of items from the JSON payload into individual rows.
+- **Deduplication:** Skip or deduplicate identical order codes so transactions are not double-counted.
+- **Referential Integrity Validation:**
+  - Resolve `store_name` to `store_id` and `customer_code` to `customer_id`.
+  - Discard or ignore line items that reference invalid/discontinued products not found in the `products` table.
+- **Reconciliation:**
+  - Compute `subtotal = quantity * unit_price` for each line item.
+  - Update or set `orders.total_amount` such that it matches the exact sum of subtotals of its valid line items.
+
+### Task 4: DDL Schema Extensions (Summary & Aggregate Tables)
+As part of your analytical tasks, you are required to design and create **two summary/aggregate tables** using `CREATE TABLE` DDL statements, then populate them via `INSERT INTO ... SELECT`:
+1. **`monthly_store_sales_summary`**: Stores pre-aggregated metrics per store and per month:
+   - Required columns: `summary_id` (PK), `store_id` (FK), `year_month` (VARCHAR(7) or DATE), `total_orders`, `total_revenue`, `avg_order_value`, `last_refreshed_at`.
+2. **`customer_lifetime_value`**: Stores customer-level aggregate analytical metrics:
+   - Required columns: `customer_id` (PK, FK), `first_order_date`, `last_order_date`, `total_orders_placed`, `total_lifetime_spend`, `customer_segment` (e.g., 'Bronze', 'Silver', 'Gold' based on spending thresholds).
+
+---
+
+## 4. Mandatory Analytical Queries (Q1 – Q15)
+
+Execute the following 15 queries using **DQL (`SELECT`)** in your PostgreSQL GUI. Include the SQL code, execution results, and a brief description/interpretation of the findings in your final report.
+
+### Category A: Relational Integrity & Data Hygiene Verification
+* **Q1 - Total Cleansed Customer Count:** Total number of unique customers successfully loaded into `customers`.
+* **Q2 - Total Processed Orders Count:** Total number of orders loaded into `orders`.
+* **Q3 - Total Valid Order Line Items:** Total number of line items loaded into `order_items`.
+* **Q4 - Default Value Verification:** Number of customers with `city = 'Unknown'`.
+* **Q5 - Duplicate Full Name Check:** Query to verify that no duplicate customer names exist in `customers` (must return 0 rows).
+* **Q6 - Orphaned Foreign Key Check:** Query to confirm that no line items reference non-existent orders or products (must return 0 rows).
+* **Q7 - Financial Reconciliation Check:** Verify that every order's `total_amount` matches the sum of its associated `order_items.subtotal` (must return 0 discrepancies).
+* **Q8 - Database Grand Revenue Fingerprint:** Calculate the exact grand total revenue across all processed orders (`SUM(total_amount)`).
+
+### Category B: Summary Tables Creation & Validation (DDL + DML + DQL)
+* **Q9 - Build & Populate Monthly Store Summary:** 
+  - Execute DDL to create `monthly_store_sales_summary`.
+  - Populate the table using `INSERT INTO ... SELECT`.
+  - Display the complete contents ordered by store and `year_month`.
+* **Q10 - Build & Populate Customer Lifetime Value (CLV):** 
+  - Execute DDL to create `customer_lifetime_value` with automated tier segmentation:
+    - *Gold:* Lifetime spend $\ge$ 5,000,000 IDR
+    - *Silver:* Lifetime spend between 2,000,000 and 4,999,999 IDR
+    - *Bronze:* Lifetime spend $<$ 2,000,000 IDR
+  - Populate the table using `INSERT INTO ... SELECT`.
+  - Query the count of customers and total revenue generated per `customer_segment`.
+
+### Category C: Business Intelligence & Decision Support Queries (DQL)
+* **Q11 - Top-Performing Store by Revenue:** Identify the store generating the highest total revenue, including store name, city, total order count, and total revenue.
+* **Q12 - Revenue Contribution by Product Category:** List all categories, total units sold, total revenue generated, and their percentage share of overall company revenue, ordered descending by revenue.
 * **Q13 - Top 5 Best-Selling Products:** Top 5 products by total units sold, displaying product name, category name, units sold, and total sales volume.
 * **Q14 - Payment Method Popularity & Basket Size:** Aggregate total transaction count, total sales amount, and average order value (AOV) grouped by `payment_method`.
 * **Q15 - Repeat Customer Behavior:** Identify customers who placed more than 1 order, displaying their name, city, number of orders, and days between their first and most recent order.

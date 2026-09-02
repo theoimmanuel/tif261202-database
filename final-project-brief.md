@@ -10,11 +10,11 @@ In modern enterprises, data is rarely handed to analysts in a clean, unified rel
 Feel free to use any code editor software to write the SQL script, although you are encouraged to use a **PostgreSQL GUI** of your choice (e.g. pgAdmin 4, DBeaver) to ease your data loading scheme.  
 
 ## Provided Data Files  
-| File Name | Format | Description |
-| :--- | :---: | :--- |
-| `schema.sql` | SQL DDL and DML| Reference schema definition containing the staging tables, core tables, and relational constraints (PK, FK, UNIQUE, CHECK), along with master reference data populating `stores`, `categories`, and `products`. |
-| `customers_raw.csv` | CSV | Raw customer registration records containing whitespaces, missing cities, and duplicate records. |
-| `transactions_raw.json` | JSON | Raw checkout logs containing order headers and nested transaction line items, including potential duplicate transaction IDs and invalid product entries. |
+| File Name | Description |
+| :--- | :--- |
+| `schema.sql` | Reference schema definition containing the staging tables, core tables, and relational constraints (PK, FK, UNIQUE, CHECK), along with master reference data populating `stores`, `categories`, and `products`. |
+| `customers_raw.csv` | Raw customer registration records containing whitespaces, missing cities, and duplicate records. |
+| `transactions_raw.json` | Raw checkout logs containing order headers and nested transaction line items, including potential duplicate transaction IDs and invalid product entries. |
 
 ## Tasks  
 ### Task 1: Logical Schema & ERD Design

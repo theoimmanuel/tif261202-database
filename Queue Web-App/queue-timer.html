@@ -3,636 +3,487 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Call Sheet — Presentation Queue</title>
+<title>Call Sheet — Live Presentation Queue</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;1,500&family=Space+Mono:wght@400;700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Public+Sans:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- Supabase JS Client v2 -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  :root{
+  :root {
     --paper: #F1ECE0;
-    --paper-2: #E8E1CF;
+    --paper-card: #EAE3D2;
     --ink: #241F1C;
-    --ink-soft: #5B5349;
+    --ink-muted: #6B6255;
     --rule: #C9BFA8;
     --cue: #B23A2E;
-    --cue-dim: #B23A2E33;
-    --slate: #47585A;
-    --highlight: #E9DEB8;
-    --radius: 3px;
+    --tag-deck: #47585A;
   }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
     background: var(--paper);
     color: var(--ink);
     font-family: 'Public Sans', sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  body {
-    background-image:
-      linear-gradient(var(--rule) 1px, transparent 1px);
-    background-size: 100% 34px;
-    background-position: 0 96px;
     min-height: 100vh;
-  }
-  a { color: inherit; }
-
-  .topbar {
+    padding: 24px 16px 60px;
     display: flex;
-    align-items: center;
+    justify-content: center;
+  }
+  .app-container {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  /* Header & Config */
+  header {
+    display: flex;
     justify-content: space-between;
-    padding: 20px 28px;
+    align-items: baseline;
     border-bottom: 2px solid var(--ink);
-    background: var(--paper);
+    padding-bottom: 8px;
   }
-  .topbar .mark {
+  .brand {
     font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
     font-style: italic;
-    font-weight: 500;
-    font-size: 1.15rem;
-    letter-spacing: 0.01em;
   }
-  .topbar .mark span {
+  .brand span {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
     font-style: normal;
-    font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    color: var(--ink-soft);
-    display: block;
-    margin-top: 2px;
+    color: var(--ink-muted);
+    margin-left: 8px;
   }
-  #admin-toggle {
+  .auth-btn {
     font-family: 'Space Mono', monospace;
-    font-size: 0.78rem;
+    font-size: 0.75rem;
     background: none;
     border: 1.5px solid var(--ink);
-    color: var(--ink);
-    padding: 8px 14px;
-    border-radius: var(--radius);
+    padding: 6px 10px;
     cursor: pointer;
-    transition: background 0.15s ease, color 0.15s ease;
+    border-radius: 2px;
   }
-  #admin-toggle:hover { background: var(--ink); color: var(--paper); }
-  #admin-toggle.on { background: var(--cue); border-color: var(--cue); color: var(--paper); }
-
-  .sheet {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 40px 28px 80px;
-    display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 48px;
-    align-items: start;
+  .auth-btn.active {
+    background: var(--cue);
+    color: #fff;
+    border-color: var(--cue);
   }
 
-  /* ---- Stage / Timer panel ---- */
-  .stage {
+  /* Sketch Top Box: BREAK | [Timer] | [Nama & Transport] */
+  .stage-box {
     border: 2px solid var(--ink);
-    border-radius: var(--radius);
     background: var(--paper);
-    padding: 28px 26px 24px;
     position: relative;
+    padding-top: 14px;
   }
-  .stage::before{
-    content: "BREAK";
+  .break-tag {
     position: absolute;
-    top: -13px;
-    left: 22px;
+    top: -12px;
+    left: 16px;
     background: var(--paper);
     padding: 0 8px;
     font-family: 'Space Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.12em;
-    color: var(--ink-soft);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
   }
-  .now-label {
-    font-size: 0.82rem;
-    color: var(--ink-soft);
-    margin-bottom: 4px;
+  .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 2px solid var(--ink);
   }
-  #current-name {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 1.9rem;
-    line-height: 1.15;
-    margin: 0 0 22px;
-    min-height: 1.3em;
-    word-break: break-word;
+  .timer-col {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid var(--ink);
   }
-  #current-name.empty { color: var(--ink-soft); font-style: italic; font-weight: 500; font-size: 1.3rem; }
-
-  .clock-row { display: flex; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
   #clock {
     font-family: 'Space Mono', monospace;
+    font-size: clamp(2.4rem, 7vw, 3.8rem);
     font-weight: 700;
-    font-size: clamp(3.2rem, 11vw, 4.6rem);
-    letter-spacing: 0.01em;
-    line-height: 1;
-    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
   }
   #clock.warn { color: var(--cue); }
-  .flash #clock { animation: flash 0.5s steps(1) 6; }
-  @keyframes flash { 50% { opacity: 0.15; } }
 
-  .transport { display: flex; gap: 10px; margin-bottom: 6px; }
-  .transport button {
-    width: 46px; height: 46px;
-    border-radius: 50%;
-    border: 2px solid var(--ink);
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease;
-  }
-  .transport button:hover { transform: translateY(-1px); }
-  #play-pause { background: var(--ink); color: var(--paper); }
-  #play-pause.playing { background: var(--cue); border-color: var(--cue); }
-  .transport button:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-
-  .duration-set {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px dashed var(--rule);
+  .speaker-col {
+    padding: 16px 20px;
     display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.85rem;
-    color: var(--ink-soft);
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
   }
-  .duration-set input {
-    width: 58px;
+  .speaker-meta {
     font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    border: 1.5px solid var(--rule);
-    border-radius: var(--radius);
-    padding: 5px 7px;
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .duration-set input:focus { outline: 2px solid var(--slate); outline-offset: 1px; }
-
-  .stage-note {
-    margin-top: 18px;
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-
-  /* ---- Queue ledger ---- */
-  .ledger h2 {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-style: italic;
-    font-size: 1.3rem;
-    margin: 0 0 2px;
-  }
-  .ledger .sub { font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 16px; }
-
-  .rows { border-top: 2px solid var(--ink); }
-  .row {
-    display: grid;
-    grid-template-columns: 34px 1fr auto;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 2px;
-    border-bottom: 1px solid var(--rule);
-  }
-  .row .num {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--ink-soft);
-  }
-  .row .name { font-size: 0.98rem; }
-  .row.current { background: var(--highlight); }
-  .row.current .num { color: var(--cue); font-weight: 700; }
-  .row.current .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     color: var(--cue);
-    letter-spacing: 0.06em;
-    display: block;
-    margin-top: 1px;
+    letter-spacing: 0.08em;
   }
-  .row.next .tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.66rem;
-    color: var(--slate);
-    letter-spacing: 0.06em;
-    display: block;
-    margin-top: 1px;
+  #speaker-name {
+    font-family: 'Fraunces', serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    line-height: 1.2;
+    word-break: break-word;
   }
-  .row .actions { display: flex; gap: 4px; }
-  .row .actions button {
-    border: none;
-    background: none;
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-    cursor: pointer;
-    padding: 4px 6px;
-    border-radius: var(--radius);
-  }
-  .row .actions button:hover { background: var(--paper-2); color: var(--ink); }
-  .row .actions button.danger:hover { color: var(--cue); }
-
-  .empty-row {
-    padding: 22px 2px;
-    color: var(--ink-soft);
-    font-style: italic;
-    font-size: 0.92rem;
-    border-bottom: 1px solid var(--rule);
-  }
-
-  .add-form {
+  .controls-row {
     display: flex;
     gap: 8px;
-    margin-top: 16px;
+    align-items: center;
   }
-  .add-form input {
-    flex: 1;
-    font-family: 'Public Sans', sans-serif;
-    font-size: 0.92rem;
-    padding: 10px 12px;
-    border: 1.5px solid var(--ink);
-    border-radius: var(--radius);
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .add-form input:focus { outline: 2px solid var(--slate); outline-offset: 1px; }
-  .add-form button {
+  .btn-transport {
     font-family: 'Space Mono', monospace;
-    font-size: 0.82rem;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    height: 36px;
+    min-width: 40px;
+    cursor: pointer;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .btn-transport:hover { background: var(--ink); color: #fff; }
+  .btn-transport:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  /* Queue Table */
+  .ledger {
+    border: 2px solid var(--ink);
+    background: var(--paper);
+  }
+  .ledger-title {
+    padding: 10px 14px;
+    border-bottom: 1.5px solid var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    display: flex;
+    justify-content: space-between;
+  }
+  .q-row {
+    display: grid;
+    grid-template-columns: 46px 1fr auto;
+    align-items: center;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .q-row:last-child { border-bottom: none; }
+  .q-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+  }
+  .q-details { display: flex; flex-direction: column; }
+  .q-name { font-size: 0.95rem; font-weight: 500; }
+  .q-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.65rem;
+    margin-top: 2px;
+  }
+  .q-sub.on-deck { color: var(--tag-deck); font-weight: 700; }
+  .q-actions { display: flex; gap: 4px; }
+  .q-actions button {
+    border: 1px solid var(--ink-muted);
+    background: none;
+    font-size: 0.75rem;
+    padding: 3px 6px;
+    cursor: pointer;
+  }
+  .empty-state {
+    padding: 24px 14px;
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 0.9rem;
+  }
+
+  /* Admin Add Form */
+  .admin-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-row {
+    display: flex;
+    gap: 8px;
+  }
+  .form-row input {
+    border: 1.5px solid var(--ink);
+    padding: 9px 12px;
+    background: var(--paper);
+    font-size: 0.9rem;
+    flex: 1;
+  }
+  .form-row button {
+    font-family: 'Space Mono', monospace;
     background: var(--ink);
     color: var(--paper);
     border: none;
-    border-radius: var(--radius);
-    padding: 0 18px;
+    padding: 0 16px;
     cursor: pointer;
   }
-  .add-form button:hover { background: var(--slate); }
 
-  .locked-note {
-    margin-top: 16px;
-    font-size: 0.82rem;
-    color: var(--ink-soft);
-    font-style: italic;
+  /* Visibility toggles */
+  [data-admin-only] { display: none !important; }
+  body.admin-mode [data-admin-only] { display: flex !important; }
+  body.admin-mode .q-actions[data-admin-only] { display: flex !important; }
+
+  @media (max-width: 520px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .timer-col { border-right: none; border-bottom: 2px solid var(--ink); padding: 16px; }
   }
-
-  [data-admin-only] { display: none; }
-  body.admin [data-admin-only] { display: revert; }
-  body.admin .locked-note { display: none; }
-  body.admin .add-form { display: flex; }
-
-  footer {
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 0 28px 50px;
-    font-size: 0.76rem;
-    color: var(--ink-soft);
-    line-height: 1.6;
-  }
-  footer code {
-    background: var(--paper-2);
-    padding: 1px 5px;
-    border-radius: 2px;
-    font-family: 'Space Mono', monospace;
-  }
-
-  @media (max-width: 760px) {
-    .sheet { grid-template-columns: 1fr; gap: 36px; padding: 28px 18px 60px; }
-    .topbar { padding: 16px 18px; }
-    #clock { font-size: clamp(3rem, 18vw, 4rem); }
-  }
-
-  :focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="mark">Call Sheet<span>presentation queue &amp; break timer</span></div>
-  <button id="admin-toggle" type="button">Unlock admin</button>
-</div>
+<div class="app-container">
+  <header>
+    <div class="brand">Call Sheet <span>live queue</span></div>
+    <button id="auth-btn" class="auth-btn" type="button">Admin Login</button>
+  </header>
 
-<main class="sheet">
-
-  <!-- STAGE / TIMER -->
-  <section class="stage" aria-label="Break timer">
-    <div class="now-label">Now presenting</div>
-    <div id="current-name" class="empty">Queue is empty</div>
-
-    <div class="clock-row">
-      <div id="clock">03:00</div>
-      <div class="transport">
-        <button id="play-pause" type="button" aria-label="Start timer">▷</button>
-        <button id="reset" type="button" aria-label="Reset timer">↺</button>
-        <button id="advance" type="button" aria-label="Advance to next" data-admin-only>▶▶</button>
+  <!-- Visualized Top Section -->
+  <section class="stage-box" aria-label="Current Presenter and Timer">
+    <div class="break-tag">BREAK</div>
+    <div class="stage-grid">
+      <div class="timer-col">
+        <div id="clock">03:00</div>
+      </div>
+      <div class="speaker-col">
+        <div>
+          <div class="speaker-meta">ON STAGE</div>
+          <div id="speaker-name">No one active</div>
+        </div>
+        
+        <!-- Admin-only Transport Controls -->
+        <div class="controls-row" data-admin-only>
+          <button id="btn-play-pause" class="btn-transport" title="Start/Pause">▷</button>
+          <button id="btn-reset" class="btn-transport" title="Reset Current">↺</button>
+          <button id="btn-next" class="btn-transport" title="Next Presenter">▶▶</button>
+        </div>
       </div>
     </div>
-
-    <div class="duration-set" data-admin-only>
-      <label for="duration-input">Break length (min : sec)</label>
-      <input id="duration-min" type="number" min="0" max="59" value="03">
-      <span>:</span>
-      <input id="duration-sec" type="number" min="0" max="59" value="00">
-      <button id="apply-duration" type="button" style="font-family:'Space Mono',monospace;font-size:0.78rem;border:1.5px solid var(--ink);background:var(--paper);border-radius:3px;padding:5px 10px;cursor:pointer;">Set</button>
-    </div>
-
-    <p class="stage-note">Timer auto-advances to the next name in the queue when it reaches zero. State is saved on this device only — refreshing won't lose your place.</p>
   </section>
 
-  <!-- QUEUE LEDGER -->
+  <!-- Numbered Queue Ledger -->
   <section class="ledger" aria-label="Queue list">
-    <h2>Running order</h2>
-    <div class="sub" id="count-sub">0 in queue</div>
+    <div class="ledger-title">
+      <span>RUNNING ORDER</span>
+      <span id="queue-count">0 PRESENTERS</span>
+    </div>
+    <div id="queue-rows"></div>
+  </section>
 
-    <div class="rows" id="rows"></div>
-
-    <p class="locked-note">Sign in as admin to add or reorder names.</p>
-    <form class="add-form" id="add-form" data-admin-only>
-      <input id="name-input" type="text" placeholder="Add a name to the queue" maxlength="60" autocomplete="off">
-      <button type="submit">Add</button>
+  <!-- Admin Add Presenter -->
+  <section class="admin-panel" data-admin-only>
+    <form id="add-form" class="form-row">
+      <input id="in-name" type="text" placeholder="Presenter Name" required autocomplete="off">
+      <input id="in-email" type="email" placeholder="Email (triggers notif on-deck)" autocomplete="off">
+      <button type="submit">Enqueue</button>
     </form>
   </section>
-
-</main>
-
-<footer>
-  This is a working prototype: the queue and timer run entirely in your browser via local storage, so it's ready to use as-is on one screen. To make it live across devices — a shared queue, an <code>admin only</code> login instead of a PIN, a real database (e.g. Supabase), and <code>notif email</code> when someone's turn is coming up — it needs a small backend wired in. Happy to build that next if useful.
-</footer>
+</div>
 
 <script>
-(function(){
+  // 1. Insert your Supabase details here
   const SUPABASE_URL = "https://cqpvpuwienybitwvfchu.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxcHZwdXdpZW55Yml0d3ZmY2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0MjE4OTQsImV4cCI6MjA5NDk5Nzg5NH0.DwoNfG1aVyMFgsPIUQfHmLn5ajCiC6bBj4fU8o_LOQY";
-  const STORAGE_KEY = 'callsheet_queue_v1';
-  const ADMIN_PIN = 'admin123';
+  const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let state = {
-    queue: [],       // {id, name}
-    duration: 180,   // seconds, default 03:00
-    remaining: 180,
-    running: false
-  };
+  let queue = [];
+  let timer = { duration_seconds: 180, remaining_seconds: 180, running: false, ends_at: null };
+  let localTimerHandle = null;
+  let currentUser = null;
 
-  function load() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) state = Object.assign(state, JSON.parse(raw));
-    } catch (e) { /* ignore corrupt state */ }
-  }
-  function save() {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-    catch (e) { /* storage unavailable */ }
-  }
-
-  const rowsEl = document.getElementById('rows');
-  const countSub = document.getElementById('count-sub');
-  const currentNameEl = document.getElementById('current-name');
+  // DOM Elements
   const clockEl = document.getElementById('clock');
-  const playPauseBtn = document.getElementById('play-pause');
-  const resetBtn = document.getElementById('reset');
-  const advanceBtn = document.getElementById('advance');
+  const speakerNameEl = document.getElementById('speaker-name');
+  const queueRowsEl = document.getElementById('queue-rows');
+  const queueCountEl = document.getElementById('queue-count');
+  const authBtn = document.getElementById('auth-btn');
+  const playPauseBtn = document.getElementById('btn-play-pause');
+  const resetBtn = document.getElementById('btn-reset');
+  const nextBtn = document.getElementById('btn-next');
   const addForm = document.getElementById('add-form');
-  const nameInput = document.getElementById('name-input');
-  const adminToggle = document.getElementById('admin-toggle');
-  const durationMin = document.getElementById('duration-min');
-  const durationSec = document.getElementById('duration-sec');
-  const applyDuration = document.getElementById('apply-duration');
-  const stageEl = document.querySelector('.stage');
-
-  let timerHandle = null;
 
   function fmt(sec) {
-    const m = Math.floor(sec / 60).toString().padStart(2, '0');
-    const s = Math.floor(sec % 60).toString().padStart(2, '0');
-    return m + ':' + s;
+    const s = Math.max(0, Math.floor(sec));
+    const m = Math.floor(s / 60).toString().padStart(2, '0');
+    const rem = (s % 60).toString().padStart(2, '0');
+    return `${m}:${rem}`;
   }
 
-  function render() {
-    // current speaker
-    const current = state.queue[0];
-    if (current) {
-      currentNameEl.textContent = current.name;
-      currentNameEl.classList.remove('empty');
-    } else {
-      currentNameEl.textContent = 'Queue is empty';
-      currentNameEl.classList.add('empty');
-    }
+  function renderQueue() {
+    queueRowsEl.innerHTML = '';
+    queueCountEl.textContent = `${queue.length} PRESENTER${queue.length === 1 ? '' : 'S'}`;
 
-    // clock
-    clockEl.textContent = fmt(state.remaining);
-    clockEl.classList.toggle('warn', state.remaining <= 10 && state.remaining > 0);
-    playPauseBtn.textContent = state.running ? 'll' : '▷';
-    playPauseBtn.classList.toggle('playing', state.running);
-    playPauseBtn.setAttribute('aria-label', state.running ? 'Pause timer' : 'Start timer');
-    const noQueue = state.queue.length === 0;
-    playPauseBtn.disabled = noQueue;
-    resetBtn.disabled = noQueue;
-    advanceBtn.disabled = state.queue.length < 2;
-
-    // duration inputs reflect saved duration when not mid-countdown edit
-    durationMin.value = String(Math.floor(state.duration / 60)).padStart(2, '0');
-    durationSec.value = String(state.duration % 60).padStart(2, '0');
-
-    // rows
-    rowsEl.innerHTML = '';
-    countSub.textContent = state.queue.length + (state.queue.length === 1 ? ' in queue' : ' in queue');
-
-    if (state.queue.length === 0) {
-      const empty = document.createElement('div');
-      empty.className = 'empty-row';
-      empty.textContent = 'No one queued yet.';
-      rowsEl.appendChild(empty);
+    if (queue.length === 0) {
+      speakerNameEl.textContent = 'Queue is empty';
+      queueRowsEl.innerHTML = `<div class="empty-state">No presenters lined up.</div>`;
       return;
     }
 
-    state.queue.forEach((item, i) => {
+    speakerNameEl.textContent = queue[0].name;
+
+    queue.forEach((item, idx) => {
       const row = document.createElement('div');
-      row.className = 'row' + (i === 0 ? ' current' : i === 1 ? ' next' : '');
+      row.className = 'q-row';
 
-      const num = document.createElement('div');
-      num.className = 'num';
-      num.textContent = String(i + 1).padStart(2, '0');
+      const tagText = idx === 0 ? 'ON STAGE' : idx === 1 ? 'ON DECK (NOTIFIED)' : '';
+      const tagClass = idx === 1 ? 'q-sub on-deck' : 'q-sub';
 
-      const nameWrap = document.createElement('div');
-      const name = document.createElement('div');
-      name.className = 'name';
-      name.textContent = item.name;
-      nameWrap.appendChild(name);
-      if (i === 0) {
-        const tag = document.createElement('span');
-        tag.className = 'tag';
-        tag.textContent = 'ON NOW';
-        nameWrap.appendChild(tag);
-      } else if (i === 1) {
-        const tag = document.createElement('span');
-        tag.className = 'tag';
-        tag.textContent = 'ON DECK';
-        nameWrap.appendChild(tag);
-      }
-
-      const actions = document.createElement('div');
-      actions.className = 'actions';
-      actions.setAttribute('data-admin-only', '');
-      if (i > 0) {
-        const up = document.createElement('button');
-        up.type = 'button';
-        up.title = 'Move up';
-        up.setAttribute('aria-label', 'Move ' + item.name + ' up');
-        up.textContent = '↑';
-        up.addEventListener('click', () => moveRow(i, -1));
-        actions.appendChild(up);
-      }
-      if (i < state.queue.length - 1) {
-        const down = document.createElement('button');
-        down.type = 'button';
-        down.title = 'Move down';
-        down.setAttribute('aria-label', 'Move ' + item.name + ' down');
-        down.textContent = '↓';
-        down.addEventListener('click', () => moveRow(i, 1));
-        actions.appendChild(down);
-      }
-      const remove = document.createElement('button');
-      remove.type = 'button';
-      remove.className = 'danger';
-      remove.title = 'Remove';
-      remove.setAttribute('aria-label', 'Remove ' + item.name);
-      remove.textContent = '✕';
-      remove.addEventListener('click', () => removeRow(i));
-      actions.appendChild(remove);
-
-      row.appendChild(num);
-      row.appendChild(nameWrap);
-      row.appendChild(actions);
-      rowsEl.appendChild(row);
+      row.innerHTML = `
+        <div class="q-num">${String(idx + 1).padStart(2, '0')}</div>
+        <div class="q-details">
+          <span class="q-name">${item.name}</span>
+          ${tagText ? `<span class="${tagClass}">${tagText}</span>` : ''}
+        </div>
+        <div class="q-actions" data-admin-only>
+          ${idx > 0 ? `<button onclick="moveQueue(${idx}, -1)">↑</button>` : ''}
+          ${idx < queue.length - 1 ? `<button onclick="moveQueue(${idx}, 1)">↓</button>` : ''}
+          <button onclick="removeQueue('${item.id}')">✕</button>
+        </div>
+      `;
+      queueRowsEl.appendChild(row);
     });
-  }
 
-  function moveRow(i, dir) {
-    const j = i + dir;
-    if (j < 0 || j >= state.queue.length) return;
-    const wasRunning = state.running;
-    [state.queue[i], state.queue[j]] = [state.queue[j], state.queue[i]];
-    if (i === 0 || j === 0) resetTimerForNewCurrent(wasRunning);
-    save(); render();
-  }
-
-  function removeRow(i) {
-    const wasCurrent = i === 0;
-    const wasRunning = state.running;
-    state.queue.splice(i, 1);
-    if (wasCurrent) resetTimerForNewCurrent(wasRunning);
-    save(); render();
-  }
-
-  function resetTimerForNewCurrent(keepRunning) {
-    state.remaining = state.duration;
-    state.running = keepRunning && state.queue.length > 0;
-    manageTicker();
-  }
-
-  function tick() {
-    if (state.remaining > 0) {
-      state.remaining -= 1;
-      save(); render();
-    }
-    if (state.remaining <= 0) {
-      flashAndAdvance();
+    if (currentUser) {
+      document.querySelectorAll('.q-actions').forEach(el => el.style.display = 'flex');
     }
   }
 
-  function flashAndAdvance() {
-    stageEl.classList.add('flash');
-    setTimeout(() => stageEl.classList.remove('flash'), 3000);
-    if (state.queue.length > 1) {
-      state.queue.shift();
-      state.remaining = state.duration;
-    } else if (state.queue.length === 1) {
-      // last presenter finished; stop, keep name visible at 00:00
-      state.running = false;
-      manageTicker();
-      save(); render();
-      return;
+  function renderClock() {
+    let curSec = timer.remaining_seconds;
+    if (timer.running && timer.ends_at) {
+      const diff = Math.round((new Date(timer.ends_at).getTime() - Date.now()) / 1000);
+      curSec = Math.max(0, diff);
     }
-    save(); render();
-  }
+    clockEl.textContent = fmt(curSec);
+    clockEl.classList.toggle('warn', curSec <= 30 && curSec > 0);
+    playPauseBtn.textContent = timer.running ? '❚❚' : '▷';
 
-  function manageTicker() {
-    if (state.running && !timerHandle) {
-      timerHandle = setInterval(tick, 1000);
-    } else if (!state.running && timerHandle) {
-      clearInterval(timerHandle);
-      timerHandle = null;
+    // Auto-advance client trigger when countdown expires
+    if (timer.running && curSec === 0) {
+      sb.rpc('advance_queue');
     }
   }
 
-  playPauseBtn.addEventListener('click', () => {
-    if (state.queue.length === 0) return;
-    if (state.remaining <= 0) state.remaining = state.duration;
-    state.running = !state.running;
-    manageTicker();
-    save(); render();
+  // --- Realtime & DB Sync ---
+  async function loadInitialData() {
+    const { data: q } = await sb.from('queue').select('*').order('position', { ascending: true });
+    if (q) queue = q;
+
+    const { data: t } = await sb.from('timer_state').select('*').eq('id', 1).single();
+    if (t) timer = t;
+
+    renderQueue();
+    renderClock();
+  }
+
+  function setupRealtime() {
+    sb.channel('callsheet_sync')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'queue' }, async () => {
+        const { data } = await sb.from('queue').select('*').order('position', { ascending: true });
+        if (data) { queue = data; renderQueue(); }
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'timer_state' }, (payload) => {
+        if (payload.new) {
+          timer = payload.new;
+          renderClock();
+        }
+      })
+      .subscribe();
+  }
+
+  // --- Admin Timer Actions ---
+  playPauseBtn.addEventListener('click', async () => {
+    if (queue.length === 0) return;
+    const isRunning = !timer.running;
+    let endsAt = null;
+
+    if (isRunning) {
+      const remaining = timer.remaining_seconds > 0 ? timer.remaining_seconds : timer.duration_seconds;
+      endsAt = new Date(Date.now() + remaining * 1000).toISOString();
+    }
+
+    await sb.from('timer_state').update({
+      running: isRunning,
+      ends_at: endsAt,
+      updated_at: new Date().toISOString()
+    }).eq('id', 1);
   });
 
-  resetBtn.addEventListener('click', () => {
-    state.remaining = state.duration;
-    state.running = false;
-    manageTicker();
-    save(); render();
+  resetBtn.addEventListener('click', async () => {
+    await sb.from('timer_state').update({
+      running: false,
+      remaining_seconds: timer.duration_seconds,
+      ends_at: null,
+      updated_at: new Date().toISOString()
+    }).eq('id', 1);
   });
 
-  advanceBtn.addEventListener('click', () => {
-    if (state.queue.length < 2) return;
-    state.queue.shift();
-    state.remaining = state.duration;
-    save(); render();
+  nextBtn.addEventListener('click', async () => {
+    await sb.rpc('advance_queue');
   });
 
-  addForm.addEventListener('submit', (e) => {
+  // --- Queue Reordering & Mutation ---
+  window.moveQueue = async function(index, direction) {
+    const target = index + direction;
+    if (target < 0 || target >= queue.length) return;
+    const a = queue[index];
+    const b = queue[target];
+
+    await sb.from('queue').upsert([
+      { id: a.id, position: b.position },
+      { id: b.id, position: a.position }
+    ]);
+  };
+
+  window.removeQueue = async function(id) {
+    await sb.from('queue').delete().eq('id', id);
+  };
+
+  addForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const val = nameInput.value.trim();
-    if (!val) return;
-    const wasEmpty = state.queue.length === 0;
-    state.queue.push({ id: Date.now() + Math.random(), name: val });
-    if (wasEmpty) state.remaining = state.duration;
-    nameInput.value = '';
-    save(); render();
+    const name = document.getElementById('in-name').value.trim();
+    const email = document.getElementById('in-email').value.trim() || null;
+    const nextPos = queue.length > 0 ? Math.max(...queue.map(q => q.position)) + 1 : 1;
+
+    await sb.from('queue').insert({ name, notify_email: email, position: nextPos });
+    addForm.reset();
   });
 
-  applyDuration.addEventListener('click', () => {
-    let m = parseInt(durationMin.value, 10); if (isNaN(m) || m < 0) m = 0;
-    let s = parseInt(durationSec.value, 10); if (isNaN(s) || s < 0) s = 0;
-    state.duration = Math.min(m, 59) * 60 + Math.min(s, 59);
-    if (!state.running) state.remaining = state.duration;
-    save(); render();
+  // --- Authentication ---
+  authBtn.addEventListener('click', async () => {
+    if (currentUser) {
+      await sb.auth.signOut();
+      setAuth(null);
+    } else {
+      const email = prompt("Admin Email:");
+      const password = prompt("Admin Password:");
+      if (!email || !password) return;
+      const { data, error } = await sb.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else setAuth(data.user);
+    }
   });
 
-  function setAdmin(on) {
-    document.body.classList.toggle('admin', on);
-    adminToggle.classList.toggle('on', on);
-    adminToggle.textContent = on ? 'Lock admin' : 'Unlock admin';
+  function setAuth(user) {
+    currentUser = user;
+    document.body.classList.toggle('admin-mode', !!user);
+    authBtn.textContent = user ? 'Logout' : 'Admin Login';
+    authBtn.classList.toggle('active', !!user);
+    renderQueue();
   }
 
-  adminToggle.addEventListener('click', () => {
-    const isAdmin = document.body.classList.contains('admin');
-    if (isAdmin) {
-      setAdmin(false);
-      return;
-    }
-    const pin = window.prompt('Enter admin PIN');
-    if (pin === ADMIN_PIN) {
-      setAdmin(true);
-    } else if (pin !== null) {
-      window.alert('Incorrect PIN.');
-    }
-  });
-
-  load();
-  manageTicker();
-  render();
-})();
+  // Start ticker and bootstrap
+  setInterval(renderClock, 500);
+  sb.auth.getUser().then(({ data }) => setAuth(data.user));
+  loadInitialData();
+  setupRealtime();
 </script>
-
 </body>
 </html>

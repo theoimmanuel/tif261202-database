@@ -1,9 +1,3 @@
--- ============================================================
--- Call Sheet — Supabase schema
--- Run this once in your project's SQL editor
--- (Supabase Dashboard → SQL Editor → New query → paste → Run)
--- ============================================================
-
 create extension if not exists "uuid-ossp";
 
 -- The presenter queue, in order.

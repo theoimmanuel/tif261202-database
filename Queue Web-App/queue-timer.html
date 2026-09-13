@@ -11,23 +11,28 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
-    --paper: #F1ECE0;
-    --paper-card: #EAE3D2;
-    --ink: #241F1C;
-    --ink-muted: #6B6255;
-    --rule: #C9BFA8;
-    --cue: #B23A2E;
-    --tag-deck: #47585A;
+    --bg: #141413;
+    --card: #1c1c1a;
+    --card-inner: #242320;
+    --border: #3b3935;
+    --border-subtle: #2d2c28;
+    --text-main: #edeae2;
+    --text-muted: #969186;
+    --cue: #e05344;
+    --cue-glow: rgba(224, 83, 68, 0.15);
+    --tag-deck: #7ea3a6;
+    --highlight: #282620;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--bg);
+    color: var(--text-main);
     font-family: 'Public Sans', sans-serif;
     min-height: 100vh;
     padding: 24px 16px 60px;
     display: flex;
     justify-content: center;
+    -webkit-font-smoothing: antialiased;
   }
   .app-container {
     width: 100%;
@@ -37,34 +42,41 @@
     gap: 20px;
   }
 
-  /* Header & Config */
+  /* Header */
   header {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 2px solid var(--ink);
-    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 12px;
   }
   .brand {
     font-family: 'Fraunces', serif;
     font-size: 1.4rem;
     font-style: italic;
+    letter-spacing: 0.01em;
   }
   .brand span {
     font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-style: normal;
-    color: var(--ink-muted);
+    color: var(--text-muted);
     margin-left: 8px;
   }
   .auth-btn {
     font-family: 'Space Mono', monospace;
     font-size: 0.75rem;
-    background: none;
-    border: 1.5px solid var(--ink);
-    padding: 6px 10px;
+    background: transparent;
+    color: var(--text-main);
+    border: 1.5px solid var(--border);
+    padding: 6px 12px;
     cursor: pointer;
     border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+  .auth-btn:hover {
+    background: var(--card-inner);
+    border-color: var(--text-muted);
   }
   .auth-btn.active {
     background: var(--cue);
@@ -72,46 +84,55 @@
     border-color: var(--cue);
   }
 
-  /* Sketch Top Box: BREAK | [Timer] | [Nama & Transport] */
+  /* Stage Box: BREAK | Clock | Speaker + Controls */
   .stage-box {
-    border: 2px solid var(--ink);
-    background: var(--paper);
+    border: 2px solid var(--border);
+    background: var(--card);
     position: relative;
     padding-top: 14px;
+    border-radius: 2px;
   }
   .break-tag {
     position: absolute;
-    top: -12px;
+    top: -11px;
     left: 16px;
-    background: var(--paper);
-    padding: 0 8px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1px 8px;
     font-family: 'Space Mono', monospace;
     font-weight: 700;
-    font-size: 0.85rem;
-    letter-spacing: 0.1em;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
   }
   .stage-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    border-bottom: 2px solid var(--ink);
+    border-bottom: 2px solid var(--border);
   }
   .timer-col {
-    padding: 20px;
+    padding: 24px 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-right: 2px solid var(--ink);
+    border-right: 2px solid var(--border);
+    background: var(--card-inner);
   }
   #clock {
     font-family: 'Space Mono', monospace;
     font-size: clamp(2.4rem, 7vw, 3.8rem);
     font-weight: 700;
     letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
   }
-  #clock.warn { color: var(--cue); }
+  #clock.warn {
+    color: var(--cue);
+    text-shadow: 0 0 16px var(--cue-glow);
+  }
 
   .speaker-col {
-    padding: 16px 20px;
+    padding: 20px 22px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -119,16 +140,22 @@
   }
   .speaker-meta {
     font-family: 'Space Mono', monospace;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--cue);
     letter-spacing: 0.08em;
+    font-weight: 700;
   }
   #speaker-name {
     font-family: 'Fraunces', serif;
-    font-size: 1.4rem;
+    font-size: 1.45rem;
     font-weight: 600;
     line-height: 1.2;
     word-break: break-word;
+  }
+  #speaker-name.empty {
+    font-style: italic;
+    color: var(--text-muted);
+    font-weight: 400;
   }
   .controls-row {
     display: flex;
@@ -137,67 +164,94 @@
   }
   .btn-transport {
     font-family: 'Space Mono', monospace;
-    background: var(--paper);
-    border: 2px solid var(--ink);
-    height: 36px;
-    min-width: 40px;
+    background: var(--card-inner);
+    color: var(--text-main);
+    border: 1.5px solid var(--border);
+    height: 38px;
+    min-width: 42px;
     cursor: pointer;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 2px;
+    transition: all 0.15s ease;
   }
-  .btn-transport:hover { background: var(--ink); color: #fff; }
-  .btn-transport:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-transport:hover {
+    background: var(--border);
+    border-color: var(--text-muted);
+  }
+  .btn-transport:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 
-  /* Queue Table */
+  /* Ledger Queue */
   .ledger {
-    border: 2px solid var(--ink);
-    background: var(--paper);
+    border: 2px solid var(--border);
+    background: var(--card);
+    border-radius: 2px;
   }
   .ledger-title {
     padding: 10px 14px;
-    border-bottom: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--border);
     font-family: 'Space Mono', monospace;
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     letter-spacing: 0.08em;
     display: flex;
     justify-content: space-between;
+    color: var(--text-muted);
   }
   .q-row {
     display: grid;
     grid-template-columns: 46px 1fr auto;
     align-items: center;
     padding: 12px 14px;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--border-subtle);
   }
   .q-row:last-child { border-bottom: none; }
+  .q-row.active-speaker { background: var(--highlight); }
   .q-num {
     font-family: 'Space Mono', monospace;
-    font-size: 0.9rem;
-    color: var(--ink-muted);
+    font-size: 0.88rem;
+    color: var(--text-muted);
   }
+  .q-row.active-speaker .q-num { color: var(--cue); font-weight: 700; }
   .q-details { display: flex; flex-direction: column; }
   .q-name { font-size: 0.95rem; font-weight: 500; }
   .q-sub {
     font-family: 'Space Mono', monospace;
     font-size: 0.65rem;
-    margin-top: 2px;
+    margin-top: 3px;
+    letter-spacing: 0.04em;
   }
   .q-sub.on-deck { color: var(--tag-deck); font-weight: 700; }
+  .q-sub.on-stage { color: var(--cue); font-weight: 700; }
+
   .q-actions { display: flex; gap: 4px; }
   .q-actions button {
-    border: 1px solid var(--ink-muted);
-    background: none;
-    font-size: 0.75rem;
-    padding: 3px 6px;
+    border: 1px solid var(--border);
+    background: var(--card-inner);
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    padding: 4px 8px;
     cursor: pointer;
+    border-radius: 2px;
+  }
+  .q-actions button:hover {
+    color: var(--text-main);
+    border-color: var(--text-muted);
+  }
+  .q-actions button.danger:hover {
+    color: var(--cue);
+    border-color: var(--cue);
   }
   .empty-state {
-    padding: 24px 14px;
+    padding: 28px 14px;
     font-style: italic;
-    color: var(--ink-muted);
+    color: var(--text-muted);
     font-size: 0.9rem;
+    text-align: center;
   }
 
   /* Admin Add Form */
@@ -211,19 +265,33 @@
     gap: 8px;
   }
   .form-row input {
-    border: 1.5px solid var(--ink);
-    padding: 9px 12px;
-    background: var(--paper);
+    border: 1.5px solid var(--border);
+    padding: 10px 12px;
+    background: var(--card);
+    color: var(--text-main);
     font-size: 0.9rem;
     flex: 1;
+    border-radius: 2px;
+    outline: none;
+  }
+  .form-row input:focus {
+    border-color: var(--text-muted);
   }
   .form-row button {
     font-family: 'Space Mono', monospace;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    padding: 0 16px;
+    background: var(--card-inner);
+    color: var(--text-main);
+    border: 1.5px solid var(--border);
+    padding: 0 18px;
     cursor: pointer;
+    font-weight: 700;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+  .form-row button:hover {
+    background: var(--text-main);
+    color: var(--bg);
+    border-color: var(--text-main);
   }
 
   /* Visibility toggles */
@@ -231,9 +299,11 @@
   body.admin-mode [data-admin-only] { display: flex !important; }
   body.admin-mode .q-actions[data-admin-only] { display: flex !important; }
 
-  @media (max-width: 520px) {
+  @media (max-width: 540px) {
     .stage-grid { grid-template-columns: 1fr; }
-    .timer-col { border-right: none; border-bottom: 2px solid var(--ink); padding: 16px; }
+    .timer-col { border-right: none; border-bottom: 2px solid var(--border); padding: 18px; }
+    .form-row { flex-direction: column; }
+    .form-row button { padding: 10px; }
   }
 </style>
 </head>
@@ -245,7 +315,7 @@
     <button id="auth-btn" class="auth-btn" type="button">Admin Login</button>
   </header>
 
-  <!-- Visualized Top Section -->
+  <!-- Stage Box -->
   <section class="stage-box" aria-label="Current Presenter and Timer">
     <div class="break-tag">BREAK</div>
     <div class="stage-grid">
@@ -255,10 +325,10 @@
       <div class="speaker-col">
         <div>
           <div class="speaker-meta">ON STAGE</div>
-          <div id="speaker-name">No one active</div>
+          <div id="speaker-name" class="empty">Queue is empty</div>
         </div>
         
-        <!-- Admin-only Transport Controls -->
+        <!-- Admin Transport Controls -->
         <div class="controls-row" data-admin-only>
           <button id="btn-play-pause" class="btn-transport" title="Start/Pause">▷</button>
           <button id="btn-reset" class="btn-transport" title="Reset Current">↺</button>
@@ -268,7 +338,7 @@
     </div>
   </section>
 
-  <!-- Numbered Queue Ledger -->
+  <!-- Running Order Ledger -->
   <section class="ledger" aria-label="Queue list">
     <div class="ledger-title">
       <span>RUNNING ORDER</span>
@@ -281,24 +351,22 @@
   <section class="admin-panel" data-admin-only>
     <form id="add-form" class="form-row">
       <input id="in-name" type="text" placeholder="Presenter Name" required autocomplete="off">
-      <input id="in-email" type="email" placeholder="Email (triggers notif on-deck)" autocomplete="off">
+      <input id="in-email" type="email" placeholder="Email (notifies on-deck)" autocomplete="off">
       <button type="submit">Enqueue</button>
     </form>
   </section>
 </div>
 
 <script>
-  // 1. Insert your Supabase details here
   const SUPABASE_URL = "https://cqpvpuwienybitwvfchu.supabase.co";
   const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxcHZwdXdpZW55Yml0d3ZmY2h1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk0MjE4OTQsImV4cCI6MjA5NDk5Nzg5NH0.DwoNfG1aVyMFgsPIUQfHmLn5ajCiC6bBj4fU8o_LOQY";
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   let queue = [];
   let timer = { duration_seconds: 180, remaining_seconds: 180, running: false, ends_at: null };
-  let localTimerHandle = null;
   let currentUser = null;
 
-  // DOM Elements
+  // DOM elements
   const clockEl = document.getElementById('clock');
   const speakerNameEl = document.getElementById('speaker-name');
   const queueRowsEl = document.getElementById('queue-rows');
@@ -322,18 +390,20 @@
 
     if (queue.length === 0) {
       speakerNameEl.textContent = 'Queue is empty';
+      speakerNameEl.classList.add('empty');
       queueRowsEl.innerHTML = `<div class="empty-state">No presenters lined up.</div>`;
       return;
     }
 
     speakerNameEl.textContent = queue[0].name;
+    speakerNameEl.classList.remove('empty');
 
     queue.forEach((item, idx) => {
       const row = document.createElement('div');
-      row.className = 'q-row';
+      row.className = 'q-row' + (idx === 0 ? ' active-speaker' : '');
 
       const tagText = idx === 0 ? 'ON STAGE' : idx === 1 ? 'ON DECK (NOTIFIED)' : '';
-      const tagClass = idx === 1 ? 'q-sub on-deck' : 'q-sub';
+      const tagClass = idx === 0 ? 'q-sub on-stage' : (idx === 1 ? 'q-sub on-deck' : 'q-sub');
 
       row.innerHTML = `
         <div class="q-num">${String(idx + 1).padStart(2, '0')}</div>
@@ -342,9 +412,9 @@
           ${tagText ? `<span class="${tagClass}">${tagText}</span>` : ''}
         </div>
         <div class="q-actions" data-admin-only>
-          ${idx > 0 ? `<button onclick="moveQueue(${idx}, -1)">↑</button>` : ''}
-          ${idx < queue.length - 1 ? `<button onclick="moveQueue(${idx}, 1)">↓</button>` : ''}
-          <button onclick="removeQueue('${item.id}')">✕</button>
+          ${idx > 0 ? `<button type="button" onclick="moveQueue(${idx}, -1)" title="Move up">↑</button>` : ''}
+          ${idx < queue.length - 1 ? `<button type="button" onclick="moveQueue(${idx}, 1)" title="Move down">↓</button>` : ''}
+          <button type="button" class="danger" onclick="removeQueue('${item.id}')" title="Remove">✕</button>
         </div>
       `;
       queueRowsEl.appendChild(row);
@@ -365,7 +435,6 @@
     clockEl.classList.toggle('warn', curSec <= 30 && curSec > 0);
     playPauseBtn.textContent = timer.running ? '❚❚' : '▷';
 
-    // Auto-advance client trigger when countdown expires
     if (timer.running && curSec === 0) {
       sb.rpc('advance_queue');
     }
@@ -398,7 +467,7 @@
       .subscribe();
   }
 
-  // --- Admin Timer Actions ---
+  // --- Controls ---
   playPauseBtn.addEventListener('click', async () => {
     if (queue.length === 0) return;
     const isRunning = !timer.running;
@@ -429,7 +498,6 @@
     await sb.rpc('advance_queue');
   });
 
-  // --- Queue Reordering & Mutation ---
   window.moveQueue = async function(index, direction) {
     const target = index + direction;
     if (target < 0 || target >= queue.length) return;
@@ -456,7 +524,7 @@
     addForm.reset();
   });
 
-  // --- Authentication ---
+  // --- Auth ---
   authBtn.addEventListener('click', async () => {
     if (currentUser) {
       await sb.auth.signOut();
@@ -479,7 +547,6 @@
     renderQueue();
   }
 
-  // Start ticker and bootstrap
   setInterval(renderClock, 500);
   sb.auth.getUser().then(({ data }) => setAuth(data.user));
   loadInitialData();
